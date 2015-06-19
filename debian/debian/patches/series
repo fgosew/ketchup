@@ -2,3 +2,4 @@ try-all-URLs-to-find-newest-kernel-version
 improve-rt-kernel-support
 fail-with-error-message
 fix-kernel-URLs
+kernel4-integration

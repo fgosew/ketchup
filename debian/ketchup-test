@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/python
 #
 # ketchup 1.0.1
 #    http://github.com/psomas/ketchup 
@@ -919,7 +919,11 @@ version_info = {
           ["%(kernel_url)s" + "/v3.x" + "/patch-%(prebase)s.bz2" ],
           r'patch-(.*?).bz2',
           1, "current stable kernel series"),
-                # current -next releases, for 4.x kernels   
+                '3-next': (latest_dir,
+                 "%(kernel_url)s" + "/next" + "/patch-v%(prebase)s%(fork)s.bz2",
+                 r'patch-v(.*?).bz2',
+                 1, "3 linux-next tree"),
+# current -next releases, for 4.x kernels   
     '4-next': (latest_dir,
                  "%(kernel_url)s" + "/next" + "/patch-v%(prebase)s%(fork)s.bz2",
                  r'patch-v(.*?).bz2',
