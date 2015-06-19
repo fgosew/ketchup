@@ -1,0 +1,55 @@
+Description: Fix several kernel URLs.
+Author: Johann Felix Soden <johfel@debian.org>
+
+---
+ ketchup |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+--- a/ketchup
++++ b/ketchup
+@@ -863,7 +863,7 @@
+     '2.6': (latest_dir,
+             ["%(kernel_url)s" + "/v2.6" + "/patch-%(prebase)s.bz2",
+              "%(kernel_url)s" + "/v2.6/longterm/v%(revbase)s/patch-%(prebase)s.bz2"],
+-            r'patch-(.*?).bz2',
++            r'linux-(.*?).tar.bz2',
+             1, "2.6 kernel series"),
+     '2.6-lt': (latest_dir_lt,
+                ["%(kernel_url)s" + "/v2.6" + "/patch-%(prebase)s.bz2",
+@@ -872,7 +872,7 @@
+                1, "2.6 kernel series - update (only) to newer longterm stable releases (fourth number of 2.6 kernels)"),
+     '2.6-rc': (latest_dir,
+                "%(kernel_url)s" + "/v2.6" + "/testing/patch-%(prebase)s.bz2",
+-               r'patch-(.*?).bz2',
++               r'linux-(.*?).tar.xz',
+                1, "2.6 kernel series prereleases"),
+     '2.6-rt': (latest_rt,
+                ["%(kernel_url)s" + "/projects/rt/%(revbase)s/patch-%(full)s.bz2",
+@@ -897,7 +897,7 @@
+     # current -next releases, for 3.x kernels
+     # FIXME: URL probably going to change (/v2.6/next -> /v3.0/next)
+     '3-next': (latest_dir,
+-                 "%(kernel_url)s" + "/v2.6/next" + "/patch-v%(prebase)s%(fork)s.bz2",
++                 "%(kernel_url)s" + "/next" + "/patch-v%(prebase)s%(fork)s.bz2",
+                  r'patch-v(.*?).bz2',
+                  1, "3 linux-next tree"),
+     '3-mm': (latest_mmotm, 
+@@ -905,7 +905,7 @@
+                r'broken-out.tar.gz',
+                0, "-mmotm quilt patchset"),
+     '3-rc': (latest_dir,
+-             "%(kernel_url)s" + "/v3.0" + "/testing/patch-%(prebase)s.bz2",
++             "%(kernel_url)s" + "/v3.x" + "/testing/patch-%(prebase)s.bz2",
+              r'patch-(.*?).bz2',
+              1, "current stable kernel series prereleases"),
+     '3-rt': (latest_rt,
+@@ -915,8 +915,7 @@
+              r'patch-(3(\.\d+)*-rt\d+).patch.bz2', # TODO: add git-based releases
+              1, "PREEMPT_RT real-time kernel (only based directly on stable and -rc kernels.)"),
+     '3': (latest_dir,
+-          ["%(kernel_url)s" + "/v3.0" + "/patch-%(prebase)s.bz2",
+-           "%(kernel_url)s" + "/v3.0/longterm/v%(revbase)s/patch-%(prebase)s.bz2"],
++          ["%(kernel_url)s" + "/v3.x" + "/patch-%(prebase)s.bz2" ],
+           r'patch-(.*?).bz2',
+           1, "current stable kernel series"),
+     }

@@ -1,0 +1,101 @@
+Description: Improve -rt kernel support.
+Author: Johann Felix Soden <johfel@debian.org>
+
+---
+ ketchup |   46 +++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 37 insertions(+), 9 deletions(-)
+
+--- a/ketchup
++++ b/ketchup
+@@ -266,8 +266,15 @@
+         version = "%s.%s.%s" % tuple([part[p] for p in parts[:3]])
+     version += part.get("EXTRAVERSION","")
+     version += part.get("CKVERSION","")
+-    
+-    # required for -next patchset 
++
++    n = None
++    try: n=open("localversion-rt")
++    except IOError:
++        pass
++    if n:
++         version += n.read()[:-1]
++
++    # required for -next patchset
+     try: n = open("localversion-next")
+     except: return version
+ 
+@@ -371,6 +378,26 @@
+     p.sort(compare_ver)
+     return p[-1]
+ 
++def latest_rt(url, pat):
++    """ Find the link to the latest rt kernel patch """
++    urls = []
++    url_parent = os.path.dirname(url)
++    postfix = ""
++    while '%' in url_parent[1:]:
++        postfix = os.path.basename(url) + "/" + postfix
++        url_parent = os.path.dirname(url_parent)
++    if postfix:
++         postfix = "/" + postfix
++    url_parent = url_parent  % { "kernel_url": kernel_url }
++    if "2.6" in pat:
++         m = last(url_parent, "(2\.6.*/)*")
++    else:
++         m = last(url_parent, "(\d.*/)")
++    if not m:
++          return None
++    l = latest_dir(url_parent + '/' + m + postfix , pat)
++    return l
++
+ def latest_dir(url, pat):
+     """Find the latest link matching pat at url after sorting"""
+     p = []
+@@ -746,9 +773,9 @@
+             d = [d]
+         for n in d:
+             r = v[0](os.path.dirname(n), v[2])
+-	    if r:
+-                return r
+-     else:
++        if r:
++            return r
++    else:
+          return ver
+ 
+ def transform(a, b):
+@@ -843,11 +870,11 @@
+                "%(kernel_url)s" + "/v2.6" + "/testing/patch-%(prebase)s.bz2",
+                r'patch-(.*?).bz2',
+                1, "2.6 kernel series prereleases"),
+-    '2.6-rt': (latest_dir,
+-               ["%(kernel_url)s" + "/projects/rt/patch-%(full)s.bz2",
+-                "%(kernel_url)s" + "/projects/rt/older/patch-%(full)s.bz2"],
++    '2.6-rt': (latest_rt,
++               ["%(kernel_url)s" + "/projects/rt/%(revbase)s/patch-%(full)s.bz2",
++                "%(kernel_url)s" + "/projects/rt/%(revbase)s/older/patch-%(full)s.bz2"],
+                r'patch-(2.6.*?).bz2',
+-               0, "Ingo Molnar's realtime-preempt kernel"),
++               1, "Ingo Molnar's realtime-preempt kernel"),
+     '2.6-pf': (latest_pf, 
+                "http://pf.natalenko.name/sources" + "/%(revbase)s" 
+                + "/patch-%(full)s.bz2",
+@@ -877,11 +904,12 @@
+              "%(kernel_url)s" + "/v3.0" + "/testing/patch-%(prebase)s.bz2",
+              r'patch-(.*?).bz2',
+              1, "current stable kernel series prereleases"),
+-    '3-rt': (latest_dir,
+-             ["%(kernel_url)s" + "/projects/rt/patch-%(full)s.bz2",
+-               "%(kernel_url)s" + "/projects/rt/older/patch-%(full)s.bz2"],
+-             r'patch-(3.*?).bz2',
+-             0, "PREEMPT_RT real-time kernel"),
++    '3-rt': (latest_rt,
++             ["%(kernel_url)s" + "/projects/rt/%(revbase)s/patch-%(full)s.patch.bz2",
++              "%(kernel_url)s" + "/projects/rt/%(revbase)s/older/patch-%(full)s.patch.bz2",
++             ],
++             r'patch-(3(\.\d+)*-rt\d+).patch.bz2', # TODO: add git-based releases
++             1, "PREEMPT_RT real-time kernel (only based directly on stable and -rc kernels.)"),
+     '3': (latest_dir,
+           ["%(kernel_url)s" + "/v3.0" + "/patch-%(prebase)s.bz2",
+            "%(kernel_url)s" + "/v3.0/longterm/v%(revbase)s/patch-%(prebase)s.bz2"],

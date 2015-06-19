@@ -1,0 +1,27 @@
+Description: Fail with error message if no proper version or patch is found.
+Author: Johann Felix Soden <johfel@debian.org>
+
+---
+ ketchup |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+--- a/ketchup
++++ b/ketchup
+@@ -321,6 +321,7 @@
+     return cmp(forknum(a), forknum(b))
+ 
+ def last(url, pat="(.*/)"):
++    n = None
+     for l in urllib.urlopen(url).readlines():
+         m = re.search('(?i)<a href="%s">' % pat, l)
+         if m: n = m.group(1)
+@@ -782,6 +783,9 @@
+     if a == b:
+         qprint("Nothing to do!")
+         return
++    if not b:
++	    error("No version found.")
++	    sys.exit(-1)
+     if not a:
+         a = install_nearest(base(b))
+     t = tree(a)

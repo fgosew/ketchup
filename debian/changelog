@@ -1,0 +1,167 @@
+ketchup (1.0.1+git20111228+e1c62066-1) unstable; urgency=low
+
+  * New upstream snapshot, now directly from linux-3 branch.
+  * debian/patches/*:  Remove all existing patches (applied upstream) and add:
+    - Try all URLs to find newest kernel version.
+    - Improve -rt kernel support.
+    - Fail with error message if no proper version or patch is found.
+    - Fix several kernel URLs.
+  * Bump to Standards-Version 3.9.3.
+  * debian/copyright: Update to copyright-format 1.0.
+  * debian/*: Change my e-mail address and remove DM upload rights.
+
+ -- Johann Felix Soden <johfel@debian.org>  Tue, 19 Jun 2012 23:46:20 +0200
+
+ketchup (1.0.1+git20110518+949b31b6-4) unstable; urgency=low
+
+  * Add several patches to debian/patches/*
+    - Fix bug with 3.x to 3.x.y update.
+      Thanks to Mikko Markus Torni <mikko.markus.torni@iki.fi>
+      (Closes: #649271)
+    - Use signature of unpacked file if there is no one for the packed file.
+    - Support xz compressed files and download them by default.
+    - Remove the no longer available 2.6-git and 3-git snapshot trees.
+    - Remove empty files from failed downloads.
+    - Fail with an error message if the unpack directory "ketchup-tmp" exists
+      and remove it even if unpacking fails.
+  * debian/copyright: Update to latest DEP5 format for lintian.
+
+ -- Johann Felix Soden <johfel@gmx.de>  Sun, 20 Nov 2011 23:36:35 +0100
+
+ketchup (1.0.1+git20110518+949b31b6-3) unstable; urgency=low
+
+  * Synchronize the 3.x support patch with corresponding upstream branch.
+    - 3.x.y versions are now correctly handled. (Closes: #638036)
+    - fix-3-rt-url patch merged.
+
+ -- Johann Felix Soden <johfel@gmx.de>  Tue, 23 Aug 2011 15:59:13 +0200
+
+ketchup (1.0.1+git20110518+949b31b6-2) unstable; urgency=low
+
+  * Synchronize the 3.x support patch with corresponding upstream branch
+    to fix URL bugs.
+  * Add patch to fix URL to 3-rt patches.
+  * Do not depend on calling file names in contrib/quilt-{push,pop} scripts.
+
+ -- Johann Felix Soden <johfel@gmx.de>  Tue, 02 Aug 2011 01:52:02 +0200
+
+ketchup (1.0.1+git20110518+949b31b6-1) unstable; urgency=low
+
+  [ Johann Felix Soden ]
+  * New upstream snapshot
+  * New upstream maintainer and repository.
+    - Update debian/{control,copyright,watch}.
+  * Drop all patches as they are merged upstream or obsolete.
+  * Add experimental support for 3.x kernel tree from upstream branch.
+    (Closes: #632059)
+  * Switch to dh compat 8.
+
+  [ Sven Hoexter ]
+  * Add DMUA flag to debian/control.
+
+ -- Johann Felix Soden <johfel@gmx.de>  Thu, 14 Jul 2011 23:24:11 +0200
+
+ketchup (0.9.8+hg5533f6de130c-3) unstable; urgency=low
+
+  * Adopt the package (Closes: #568572)
+    - Thanks for your work Baruch Even!
+  * Update debian/copyright and convert it to machine-readable format.
+  * Convert package to the 3.0 (quilt) source format.
+  * Minimize dh rules and use dh_python2 instead of python-central.
+    (Closes: #616854)
+  * Bump to Standards-Version 3.9.2
+  * debian/control:
+    - Use Homepage field. (Closes: #615371)
+    - Add Vcs-* fields.
+  * Add several patches to debian/patches/*:
+    - Fix url to -rt tree (Closes: #487277)
+    - Consider kernel_url override in all pre-defined trees. (Closes: #407512)
+    - Check if the right gpg key is available before starting downloads.
+      (Closes: #379121)
+    - Stop if wget is terminated by a signal.
+    - Add support for longterm kernel versions.
+    - New 2.6-lt tree which chooses only updates that belong to the local used
+      longterm/release tree.
+
+ -- Johann Felix Soden <johfel@gmx.de>  Mon, 18 Apr 2011 23:57:55 +0200
+
+ketchup (0.9.8+hg5533f6de130c-2) unstable; urgency=low
+
+  * Use .sign files for -ck/-cks trees (Closes: #411492)
+  * Use python-central
+  * Switch to dh compat 5
+
+ -- Baruch Even <baruch@debian.org>  Sun, 08 Jul 2007 08:33:49 +0300
+
+ketchup (0.9.8+hg5533f6de130c-1) unstable; urgency=low
+
+  * Use patch 5533f6de130c from upstream repository to fix dot-file issues
+    - Should fix (Closes: #386694) by not using a shell regex at all
+  * Remove debian/ketchup.1 manpage, upstream provides a manpage which is
+    better (Closes: #410534)
+  * Remove reference to /home/baruch/.ketchuprc, use ~/.ketchuprc
+    (Closes: #404644)_
+
+ -- Baruch Even <baruch@debian.org>  Sat, 07 Jul 2007 20:15:26 +0300
+
+ketchup (0.9.8-3) unstable; urgency=low
+
+  * Depend on patch and bzip2 since ketchup uses them both for various trees.
+    (Closes: #398725)
+
+ -- Baruch Even <baruch@debian.org>  Wed, 15 Nov 2006 19:26:21 +0200
+
+ketchup (0.9.8-2) unstable; urgency=low
+
+  * Update watch file (Closes: #378169)
+
+ -- Baruch Even <baruch@debian.org>  Sat, 29 Jul 2006 04:24:57 +0100
+
+ketchup (0.9.8-1) unstable; urgency=low
+
+  * Acknowledge NMU by Zephaniah E. Hull (Closes: #365603, #365653)
+  * Update data for -ck/-cks patches, thanks to Sven Hartge (Closes: #369871)
+  * Update Standards-Version to 3.7.2, no changes needed.
+  * Moved debhelper to Build-Depends from Build-Depends-Indep
+
+ -- Baruch Even <baruch@debian.org>  Thu, 13 Jul 2006 23:02:49 +0100
+
+ketchup (0.9.8-0.1) unstable; urgency=low
+
+  * NMU.
+  * New upstream release (Closes: #365603)
+    - Fix bug sorting two-digit post versions. (Closes: #365653)
+
+ -- Zephaniah E. Hull <warp@debian.org>  Sun, 14 May 2006 08:20:45 -0400
+
+ketchup (0.9.6-2) unstable; urgency=low
+
+  * Move .* files from linux directories to handle .gitignore files
+    (Closes: #339374)
+
+ -- Baruch Even <baruch@debian.org>  Fri,  2 Dec 2005 17:47:05 +0000
+
+ketchup (0.9.6-1) unstable; urgency=low
+
+  * New upstream version
+    - Work better when LATEST-IS file is missing (Closes: #333201)
+  * Apply patch to create directories specified by the user.
+    Thanks to David Hardeman <david@2gen.com>
+    (Closes: #339375)
+
+ -- Baruch Even <baruch@debian.org>  Mon, 28 Nov 2005 22:42:37 +0000
+
+ketchup (0.9.5-1) unstable; urgency=low
+
+  * New upstream release
+    - Implements dry-run (Closes: #324810)
+    - Support git kernels with 2.6-git name (Closes: #324811)
+
+ -- Baruch Even <baruch@debian.org>  Tue, 18 Oct 2005 10:22:33 +0100
+
+ketchup (0.9-1) unstable; urgency=low
+
+  * Initial release Closes: #303940
+
+ -- Baruch Even <baruch@debian.org>  Fri, 12 Aug 2005 14:55:58 +0100
+

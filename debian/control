@@ -1,0 +1,20 @@
+Source: ketchup
+Section: devel
+Priority: optional
+Maintainer: Johann Felix Soden <johfel@debian.org>
+Build-Depends: debhelper (>= 8), python (>= 2.6.6-3~)
+Standards-Version: 3.9.3
+Homepage: https://github.com/psomas/ketchup
+Vcs-Git: git://git.debian.org/git/collab-maint/ketchup.git
+Vcs-Browser: http://git.debian.org/?p=collab-maint/ketchup.git;a=summary
+
+Package: ketchup
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}, patch, bzip2, xz-utils
+Description: update utility for linux-kernel sources
+ This utility can update (or install) kernel sources automatically.
+ It can search for the newest kernel in numerous trees (vanilla, rc,
+ tiny, mm, mjb, etc.).
+ .
+ It can also automatically download the needed patches (and apply
+ them) to create the newest repository from an old one.
